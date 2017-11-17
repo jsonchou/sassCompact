@@ -27,11 +27,11 @@ var _unitEvt = function() {
 
     var res = content
 
-        .replace(/(\;\ )+/g, ';')
-        .replace(/\}/g, ';}')
-        .replace(/\;+/g, ';')
-        .replace(/(\;\ )+/g, ';')
-        .replace(/\;/g, '; ')
+        // .replace(/(\;\ )+/g, ';')
+        // .replace(/\}/g, ';}')
+        // .replace(/\;+/g, ';')
+        // .replace(/(\;\ )+/g, ';')
+        // .replace(/\;/g, '; ')
 
     // .replace(/\s?\{/g, ' {') //"{" => " { "
     //     .replace(/\}/g, '}') //"}  " => "} "
@@ -92,7 +92,6 @@ var _unitEvt = function() {
             .replace(new RegExp('\\{\\s{12}\\' + sub, 'g'), `{${os.EOL}${' '.repeat(4*3)}` + sub)
             .replace(new RegExp('\\{\\s{8}\\' + sub, 'g'), `{${os.EOL}${' '.repeat(4*2)}` + sub)
             .replace(new RegExp('\\{\\s{4}\\' + sub, 'g'), `{${os.EOL}${' '.repeat(4*1)}` + sub);
-
     })
 
     // labels
@@ -148,15 +147,18 @@ var _unitEvt = function() {
         res = res.replace(new RegExp('\\;\\s+' + item, 'g'), '; ' + item);
     })
 
+    for (let i = 0; i < 6; i++) {
+        
+    }
 
     //replace header @import
     // res = res.replace(new RegExp('\\;\\@', 'g'), `;${os.EOL}@`)
 
     //replace header {
-    res = res.replace(new RegExp('\\ \\{\\s{4,24}', 'g'), ` { `)
+    res = res.replace(new RegExp('\\ \\{\\s{2,24}', 'g'), ` { `)
 
     //replace all blanks
-    // res = res.replace(new RegExp(`\\;\\s+`, 'g'), `; `)
+    res = res.replace(new RegExp(`\\;\\s+\\}`, 'g'), `; }`)
 
     // res = res.replace(/\;\}/g, '; }')
     //     .replace(/(\;\ )+/g, '; ')
