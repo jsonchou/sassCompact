@@ -27,7 +27,11 @@ var _unitEvt = function() {
 
     var res = content
 
-        .replace(/\}/g, '; }')
+        .replace(/(\;\ )+/g, ';')
+        .replace(/\}/g, ';}')
+        .replace(/\;+/g, ';')
+        .replace(/(\;\ )+/g, ';')
+        .replace(/\;/g, '; ')
 
     // .replace(/\s?\{/g, ' {') //"{" => " { "
     //     .replace(/\}/g, '}') //"}  " => "} "
@@ -68,9 +72,6 @@ var _unitEvt = function() {
 
     let labels = "a|abbr|acronym|address|applet|area|article|aside|audio|b|base|basefont|bdi|bdo|big|blockquote|body|br|button|canvas|caption|center|cite|code|col|colgroup|command|datalist|dd|del|details|dir|div|dfn|dialog|dl|dt|em|embed|fieldset|figcaption|figure|font|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|header|hr|html|i|iframe|img|input|ins|kbd|keygen|label|legend|li|link|map|mark|menu|menuitem|meta|meter|nav|noframes|noscript|object|ol|optgroup|option|output|p|param|pre|progress|q|rp|rt|ruby|s|samp|script|section|select|small|source|span|strike|strong|style|sub|summary|sup|table|tbody|td|textarea|tfoot|th|thead|time|title|tr|track|tt|u|ul|var|video|wbr"
 
-
-    res = res.replace(new RegExp('\\;{2,24}', 'g'), ';');
-    res = res.replace(new RegExp('(\\;\\ ){2,24}', 'g'), '; ');
 
     let labelsExt = "#.:[";
 
@@ -120,6 +121,14 @@ var _unitEvt = function() {
                 .replace(new RegExp('\\ \\{\\s{12}' + item + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*3)}` + item + sub)
                 .replace(new RegExp('\\ \\{\\s{8}' + item + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*2)}` + item + sub)
                 .replace(new RegExp('\\ \\{\\s{4}' + item + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*1)}` + item + sub);
+
+            res =
+                res.replace(new RegExp('\\;\\s{24}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*6)}` + item + sub)
+                .replace(new RegExp('\\;\\s{20}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*5)}` + item + sub)
+                .replace(new RegExp('\\;\\s{16}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*4)}` + item + sub)
+                .replace(new RegExp('\\;\\s{12}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*3)}` + item + sub)
+                .replace(new RegExp('\\;\\s{8}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*2)}` + item + sub)
+                .replace(new RegExp('\\;\\s{4}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*1)}` + item + sub);
         })
 
     })
@@ -134,14 +143,20 @@ var _unitEvt = function() {
             .replace(new RegExp('\\ \\{\\s{4}' + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*1)}` + sub);
     })
 
-    //replace header information
+    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word";
+    tags.split('|').forEach(item => {
+        res = res.replace(new RegExp('\\;\\s+' + item, 'g'), '; ' + item);
+    })
+
+
+    //replace header @import
     // res = res.replace(new RegExp('\\;\\@', 'g'), `;${os.EOL}@`)
 
     //replace header {
-    // res = res.replace(new RegExp('\\ \\{\\s{4,24}', 'g'), ` { `)
+    res = res.replace(new RegExp('\\ \\{\\s{4,24}', 'g'), ` { `)
 
     //replace all blanks
-    // res = res.replace(new RegExp(`\\;\\s{1,24}`, 'g'), `; `)
+    // res = res.replace(new RegExp(`\\;\\s+`, 'g'), `; `)
 
     // res = res.replace(/\;\}/g, '; }')
     //     .replace(/(\;\ )+/g, '; ')
@@ -156,6 +171,11 @@ var _unitEvt = function() {
 
     // flag+labels
 
+
+
+
+    // res = res.replace(new RegExp('\\;{2,24}', 'g'), ';');
+    // res = res.replace(new RegExp('(\\;\\ ){2,24}', 'g'), '; ');
 
 
     if (res) {
