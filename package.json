@@ -1,0 +1,64 @@
+{
+    "name": "sass-compact",
+    "displayName": "sass-compact",
+    "description": "let's go back to original way to write our css",
+    "version": "0.0.1",
+    "publisher": "jsonchou",
+    "Keywords": "sass compact,format css,single line,single row",
+    "author": {
+        "name": "jsonchou",
+        "url": "https://github.com/jsonchou"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jsonchou/sassCompact.git"
+    },
+    "bugs": {
+        "url": "https://github.com/jsonchou/sassCompact/issues",
+        "email": "jsonchou@outlook.com"
+    },
+    "icon": "name.jpg",
+    "engines": {
+        "vscode": "^1.12.0"
+    },
+    "categories": [
+        "Formatters"
+    ],
+    "activationEvents": [
+        "onCommand:extension.sassCompact",
+        "onLanguage:scss"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "sass compact",
+            "properties": {
+                "sassCompact.Author": {
+                    "type": "string",
+                    "default": "jsonchou",
+                    "description": "author description"
+                }
+            }
+        },
+        "keybindings": [{
+            "command": "extension.sassCompact",
+            "key": "shift+alt+f",
+            "when": "editorTextFocus && editorLangId == scss"
+        }],
+        "commands": [{
+            "command": "extension.sassCompact",
+            "title": "sassCompact"
+        }]
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.0.3",
+        "vscode": "^1.0.0",
+        "@types/node": "^6.0.40",
+        "@types/mocha": "^2.2.32"
+    }
+}
