@@ -7,7 +7,7 @@ var vscode = require('vscode');
 //var window = vscode.window;
 var commands = vscode.commands;
 
-const level = 7; //max nest level
+const level = 8; //max nest level
 
 //unit event
 var _unitEvt = function() {
@@ -72,9 +72,10 @@ var _unitEvt = function() {
 
     let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text-|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word|flex|align|justify|outline|orphans|widows|page-|clip|touch|pointer|resize|order|counter|list|zoom";
 
+    // remove header {}
     tags.split('|').forEach(item => {
         res = res.replace(new RegExp('\\;\\s+' + item, 'g'), '; ' + item)
-            .replace(new RegExp(`\\s{1}\\{\\s{2,24}${item}`, 'g'), ` { ${item}`)
+            .replace(new RegExp(`\\s{1}\\{\\s{2,${4*level}}${item}`, 'g'), ` { ${item}`)
     })
 
     //replace all blanks
