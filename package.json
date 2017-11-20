@@ -4,7 +4,7 @@
     "description": "let's go back to original way to write our css",
     "version": "0.0.1",
     "publisher": "jsonchou",
-    "Keywords": "sass compact,format css,single line,single row",
+    "Keywords": "sass compact,less compact,format css,single line,single row",
     "author": {
         "name": "jsonchou",
         "url": "https://github.com/jsonchou"
@@ -38,6 +38,11 @@
                     "type": "string",
                     "default": "jsonchou",
                     "description": "author description"
+                },
+                "sassCompact.Less": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "enable less"
                 }
             }
         },

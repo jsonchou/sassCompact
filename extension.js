@@ -7,7 +7,7 @@ var vscode = require('vscode');
 //var window = vscode.window;
 var commands = vscode.commands;
 
-const level = 6; //max nest level
+const level = 7; //max nest level
 
 //unit event
 var _unitEvt = function() {
@@ -18,9 +18,14 @@ var _unitEvt = function() {
         return;
     }
 
-    // if (!doc || doc.languageId !== 'scss' || doc.languageId !== 'less') {
-    //     return;
-    // }
+    if (!doc || doc.languageId !== 'scss' || doc.languageId !== 'less') {
+        return;
+    }
+
+    less = config.Less;
+    if (doc.languageId === 'less' && !less) {
+        return;
+    }
 
     var start = new vscode.Position(0, 0);
     var end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length);
