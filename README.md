@@ -1,4 +1,4 @@
-# css-compact vscode plugin
+# sass-compact vscode plugin
 
 let's go back to original way to write our css
 

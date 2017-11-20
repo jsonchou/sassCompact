@@ -7,6 +7,8 @@ var vscode = require('vscode');
 //var window = vscode.window;
 var commands = vscode.commands;
 
+const level = 6; //max nest level
+
 //unit event
 var _unitEvt = function() {
     var config = vscode.workspace.getConfiguration('sassCompact');
@@ -16,7 +18,7 @@ var _unitEvt = function() {
         return;
     }
 
-    // if (!doc || doc.languageId !== 'scss') {
+    // if (!doc || doc.languageId !== 'scss' || doc.languageId !== 'less') {
     //     return;
     // }
 
@@ -30,20 +32,6 @@ var _unitEvt = function() {
         .replace(/(\;\ )+/g, ';')
         .replace(/\;/g, '; ')
 
-    // .replace(/\s?\{/g, ' {') //"{" => " { "
-    //     .replace(/\}/g, '}') //"}  " => "} "
-    //     .replace(/\;/g, '; ') //";" => "; "
-    //     .replace(/\ +\;/g, ';') //" ;" => ";"
-    //     .replace(/\)\ +\{/g, ') {') //"){" => ") {"
-
-    // .replace(/\ +/g, ' ') //remove multi empty
-    // .replace(/\t+/g, '') //remove tab(U+0009)
-    // .replace(/\v+/g, '') //remove tab(U+000B)
-
-    // .replace(new RegExp('; ' + os.EOL, 'g'), ';')
-    //     .replace(new RegExp('{ ' + os.EOL, 'g'), '{')
-    //     .replace(new RegExp(os.EOL + '; }', 'g'), '; }')
-
     // fix animation style
     .replace(/\{\ 0%\ \{/g, '{ ' + os.EOL + ' 0% {')
         .replace(/\{\ from\ \{/g, '{ ' + os.EOL + ' from {')
@@ -55,11 +43,6 @@ var _unitEvt = function() {
     // .replace(/\)\ \{\ \#/g, ')' + os.EOL + ' { ' + os.EOL + ' ' + '#')
     // .replace(/\)\ \{\ \:/g, ')' + os.EOL + ' { ' + os.EOL + ' ' + ':')
 
-    // .replace(new RegExp(os.EOL + ' {', 'g'), os.EOL + ' {' + os.EOL)
-    // .replace(new RegExp(os.EOL + ' {' + os.EOL + ' ' + os.EOL + ' ', 'g'), '{' + os.EOL + ' ')
-
-    // .replace(new RegExp(os.EOL + '\\ {4}' + ';}', 'g'), ';}')
-
     .replace(new RegExp(';' + os.EOL, 'g'), ';')
         .replace(new RegExp('{' + os.EOL, 'g'), '{')
         .replace(new RegExp(os.EOL + '}', 'g'), '}'); //end
@@ -70,44 +53,23 @@ var _unitEvt = function() {
 
     //max level is six
     flags.split('').forEach(sub => {
-        res =
-            res.replace(new RegExp('\\;\\s{24}\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*6)}` + sub)
-            .replace(new RegExp('\\;\\s{20}\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*5)}` + sub)
-            .replace(new RegExp('\\;\\s{16}\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*4)}` + sub)
-            .replace(new RegExp('\\;\\s{12}\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*3)}` + sub)
-            .replace(new RegExp('\\;\\s{8}\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*2)}` + sub)
-            .replace(new RegExp('\\;\\s{4}\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*1)}` + sub);
-
-        res =
-            res.replace(new RegExp('\\{\\s{24}\\' + sub, 'g'), `{${os.EOL}${' '.repeat(4*6)}` + sub)
-            .replace(new RegExp('\\{\\s{20}\\' + sub, 'g'), `{${os.EOL}${' '.repeat(4*5)}` + sub)
-            .replace(new RegExp('\\{\\s{16}\\' + sub, 'g'), `{${os.EOL}${' '.repeat(4*4)}` + sub)
-            .replace(new RegExp('\\{\\s{12}\\' + sub, 'g'), `{${os.EOL}${' '.repeat(4*3)}` + sub)
-            .replace(new RegExp('\\{\\s{8}\\' + sub, 'g'), `{${os.EOL}${' '.repeat(4*2)}` + sub)
-            .replace(new RegExp('\\{\\s{4}\\' + sub, 'g'), `{${os.EOL}${' '.repeat(4*1)}` + sub);
+        for (let i = level; i >= 1; i--) {
+            res =
+                res.replace(new RegExp(`\\;\\s{${4*i}}\\` + sub, 'g'), `;${os.EOL}${' '.repeat(4*i)}` + sub)
+                .replace(new RegExp(`\\{\\s{${4*i}}\\` + sub, 'g'), `{${os.EOL}${' '.repeat(4*i)}` + sub)
+        }
     })
 
     // labels
     labels.split('|').forEach(item => {
-        res =
-            res.replace(new RegExp('\\;\\s{24}' + item, 'g'), `;${os.EOL}${' '.repeat(4*6)}` + item)
-            .replace(new RegExp('\\;\\s{20}' + item, 'g'), `;${os.EOL}${' '.repeat(4*5)}` + item)
-            .replace(new RegExp('\\;\\s{16}' + item, 'g'), `;${os.EOL}${' '.repeat(4*4)}` + item)
-            .replace(new RegExp('\\;\\s{12}' + item, 'g'), `;${os.EOL}${' '.repeat(4*3)}` + item)
-            .replace(new RegExp('\\;\\s{8}' + item, 'g'), `;${os.EOL}${' '.repeat(4*2)}` + item)
-            .replace(new RegExp('\\;\\s{4}' + item, 'g'), `;${os.EOL}${' '.repeat(4*1)}` + item)
-
-        res =
-            res.replace(new RegExp('\\ \\{\\s{24}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*6)}` + item)
-            .replace(new RegExp('\\ \\{\\s{20}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*5)}` + item)
-            .replace(new RegExp('\\ \\{\\s{16}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*4)}` + item)
-            .replace(new RegExp('\\ \\{\\s{12}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*3)}` + item)
-            .replace(new RegExp('\\ \\{\\s{8}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*2)}` + item)
-            .replace(new RegExp('\\ \\{\\s{4}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*1)}` + item)
-
+        for (let i = level; i >= 1; i--) {
+            res =
+                res.replace(new RegExp(`\\;\\s{${4*i}}` + item, 'g'), `;${os.EOL}${' '.repeat(4*i)}` + item)
+                .replace(new RegExp(`\\ \\{\\s{${4*i}}` + item, 'g'), ` {${os.EOL}${' '.repeat(4*i)}` + item)
+        }
     })
 
-    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text-|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word|flex|align|justify|outline|orphans|widows|page-|clip|touch|pointer|resize|order";
+    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text-|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word|flex|align|justify|outline|orphans|widows|page-|clip|touch|pointer|resize|order|counter|list";
     tags.split('|').forEach(item => {
         res = res.replace(new RegExp('\\;\\s+' + item, 'g'), '; ' + item)
             .replace(new RegExp(`\\s{1}\\{\\s{2,24}${item}`, 'g'), ` { ${item}`)
@@ -123,13 +85,18 @@ var _unitEvt = function() {
         res = res.replace(new RegExp(`\\:\\s{2,}${item}`, 'g'), `: ${item}`)
     })
 
-    "@extend|@mixin|@media|@if|@each".split('|').forEach(item => {
+    "#$".split('').forEach(item => {
+        res = res.replace(new RegExp(`\\:\\s{2,}\\${item}`, 'g'), `: ${item}`)
+            // .replace(new RegExp(`\\;\\s*\\${item}`, 'g'), `; ${item}`)
+            // .replace(new RegExp(`\\s{1}\\{\\s*\\${item}`, 'g'), ` { ${item}`)
+    })
+
+    "@extend|@mixin".split('|').forEach(item => {
         res = res.replace(new RegExp(`\\s{1}\\{\\s{2,}\\${item}`, 'g'), ` { ${item}`)
             .replace(new RegExp(`\\;\\{\\s{2,}\\${item}`, 'g'), `; ${item}`)
     })
 
-    res = res.replace(new RegExp(`\\;\\s*\\$`, 'g'), `;${os.EOL}$`)
-        res = res.replace(new RegExp('\\;\\s*\\@import', 'g'), `;${os.EOL}@import`)
+    res = res.replace(new RegExp('\\;\\s*\\@import', 'g'), `;${os.EOL}@import`);
 
     if (res) {
 
