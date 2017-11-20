@@ -37,6 +37,7 @@ var _unitEvt = function() {
 
     var res = content
 
+        .replace(new RegExp('; base64,', 'g'), ';base64,')
         .replace(/(\;\ )+/g, ';')
         .replace(/\;/g, '; ')
 
@@ -44,12 +45,6 @@ var _unitEvt = function() {
     .replace(/\{\ 0%\ \{/g, '{ ' + os.EOL + ' 0% {')
         .replace(/\{\ from\ \{/g, '{ ' + os.EOL + ' from {')
         .replace(/\}\ to\ \{/g, '} ' + os.EOL + ' to {')
-        .replace(new RegExp('; base64,', 'g'), ';base64,')
-
-    // fix queryMedia style
-    // .replace(/\)\ \{\ \./g, ')' + os.EOL + ' { ' + os.EOL + ' ' + '.')
-    // .replace(/\)\ \{\ \#/g, ')' + os.EOL + ' { ' + os.EOL + ' ' + '#')
-    // .replace(/\)\ \{\ \:/g, ')' + os.EOL + ' { ' + os.EOL + ' ' + ':')
 
     .replace(new RegExp(';' + os.EOL, 'g'), ';')
         .replace(new RegExp('{' + os.EOL, 'g'), '{')
@@ -59,7 +54,6 @@ var _unitEvt = function() {
 
     let labels = "a|b|p|q|s|canvas|caption|center|cite|code|col|colgroup|command|datalist|dd|del|details|dir|div|dfn|dialog|dl|dt|em|embed|fieldset|figcaption|figure|font|footer|form|frame|frameset|h|i|kbd|keygen|label|legend|li|link|map|mark|menu|menuitem|meta|meter|nav|noframes|noscript|object|ol|optgroup|option|output|rp|rt|ruby|table|tbody|td|textarea|tfoot|th|thead|time|title|tr|track|tt|u|wbr"
 
-    //max level is six
     flags.split('').forEach(sub => {
         for (let i = level; i >= 1; i--) {
             res =
@@ -71,13 +65,13 @@ var _unitEvt = function() {
     // labels
     labels.split('|').forEach(item => {
         for (let i = level; i >= 1; i--) {
-            res =
-                res.replace(new RegExp(`\\;\\s{${4*i}}` + item, 'g'), `;${os.EOL}${' '.repeat(4*i)}` + item)
-                .replace(new RegExp(`\\ \\{\\s{${4*i}}` + item, 'g'), ` {${os.EOL}${' '.repeat(4*i)}` + item)
+            res = res.replace(new RegExp(`\\;\\s{${4*i}}` + item, 'g'), `;${os.EOL}${' '.repeat(4*i)}` + item)
+            res = res.replace(new RegExp(`\\ \\{\\s{${4*i}}` + item, 'g'), ` {${os.EOL}${' '.repeat(4*i)}` + item)
         }
     })
 
-    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text-|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word|flex|align|justify|outline|orphans|widows|page-|clip|touch|pointer|resize|order|counter|list";
+    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text-|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word|flex|align|justify|outline|orphans|widows|page-|clip|touch|pointer|resize|order|counter|list|zoom";
+
     tags.split('|').forEach(item => {
         res = res.replace(new RegExp('\\;\\s+' + item, 'g'), '; ' + item)
             .replace(new RegExp(`\\s{1}\\{\\s{2,24}${item}`, 'g'), ` { ${item}`)
@@ -114,8 +108,6 @@ var _unitEvt = function() {
 
     }
 
-    // Display a message box to the user
-    //window.showInformationMessage('Hello World!');
 }
 
 // this method is called when your extension is activated

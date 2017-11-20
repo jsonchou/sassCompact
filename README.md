@@ -19,9 +19,7 @@ let's go back to original way to write our css
 
 ## Examples
 
-* **common style formatter**
-
-~~~ source segment
+~~~ css
 .pt-select {
     margin: 0 auto 3.6rem;
     span {
@@ -69,7 +67,7 @@ let's go back to original way to write our css
 }
 ~~~
 
-~~~ format result
+~~~ css
 .pt-select { margin: 0 auto 3.6rem; 
     span { margin: 0 0.7rem; width: 11.7rem; height: 16.5rem; 
         div { width: 11.7rem; border: 0.3rem solid #0d25a2; }
@@ -103,8 +101,9 @@ Initial release of cssCompact
 
 **Note:** 
 
-* 1、if you can not format your **.scss** files, may be you can exchange LF with CRLF.
-* 2、leave a blank before '**}**' to make your emmet effective and format your code.
-* 3、if something weired, use **ctrl+K ctrl+D** to format your .scss files first.
+* 1、if you can not format your **.scss/.less** files, maybe you can exchange LF with CRLF.
+* 2、if something weired, use **ctrl+K ctrl+D** to standard formatting your .scss files first.
+* 3、leave a blank before '**}**' to make your emmet effective and format your code.
+* 4、max nest level is 7, do not over this limit. 
 
 **Enjoy!**
