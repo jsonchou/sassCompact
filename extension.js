@@ -18,12 +18,15 @@ var _unitEvt = function() {
         return;
     }
 
-    if (!doc || doc.languageId !== 'scss' || doc.languageId !== 'less') {
+    if (!doc) {
         return;
     }
 
-    less = config.Less;
-    if (doc.languageId === 'less' && !less) {
+    if (!(doc.languageId == 'scss' || doc.languageId == 'less')) {
+        return;
+    }
+
+    if (doc.languageId == 'less' && !config.Less) {
         return;
     }
 
