@@ -27,11 +27,11 @@ var _unitEvt = function() {
 
     var res = content
 
-        // .replace(/(\;\ )+/g, ';')
-        // .replace(/\}/g, ';}')
-        // .replace(/\;+/g, ';')
-        // .replace(/(\;\ )+/g, ';')
-        // .replace(/\;/g, '; ')
+    // .replace(/(\;\ )+/g, ';')
+    // .replace(/\}/g, ';}')
+    // .replace(/\;+/g, ';')
+    // .replace(/(\;\ )+/g, ';')
+    // .replace(/\;/g, '; ')
 
     // .replace(/\s?\{/g, ' {') //"{" => " { "
     //     .replace(/\}/g, '}') //"}  " => "} "
@@ -48,16 +48,15 @@ var _unitEvt = function() {
     //     .replace(new RegExp(os.EOL + '; }', 'g'), '; }')
 
     // fix animation style
-    .replace(/\{\ 0%\ \{/g, '{ ' + os.EOL + ' 0% {')
+        .replace(/\{\ 0%\ \{/g, '{ ' + os.EOL + ' 0% {')
         .replace(/\{\ from\ \{/g, '{ ' + os.EOL + ' from {')
         .replace(/\}\ to\ \{/g, '} ' + os.EOL + ' to {')
         .replace(new RegExp('; base64,', 'g'), ';base64,')
 
     // fix queryMedia style
-    // .replace(new RegExp('} }', 'g'), '} ' + os.EOL + ' }')
-    //     .replace(/\)\ \{\ \./g, ')' + os.EOL + ' { ' + os.EOL + ' ' + '.')
-    //     .replace(/\)\ \{\ \#/g, ')' + os.EOL + ' { ' + os.EOL + ' ' + '#')
-    //     .replace(/\)\ \{\ \:/g, ')' + os.EOL + ' { ' + os.EOL + ' ' + ':')
+    // .replace(/\)\ \{\ \./g, ')' + os.EOL + ' { ' + os.EOL + ' ' + '.')
+    // .replace(/\)\ \{\ \#/g, ')' + os.EOL + ' { ' + os.EOL + ' ' + '#')
+    // .replace(/\)\ \{\ \:/g, ')' + os.EOL + ' { ' + os.EOL + ' ' + ':')
 
     // .replace(new RegExp(os.EOL + ' {', 'g'), os.EOL + ' {' + os.EOL)
     // .replace(new RegExp(os.EOL + ' {' + os.EOL + ' ' + os.EOL + ' ', 'g'), '{' + os.EOL + ' ')
@@ -68,12 +67,11 @@ var _unitEvt = function() {
         .replace(new RegExp('{' + os.EOL, 'g'), '{')
         .replace(new RegExp(os.EOL + '}', 'g'), '}'); //end
 
-    let flags = "%$@~+>&*[:.#";
+    let flags = "%$~+>&*[:.#";
 
     let labels = "a|abbr|acronym|address|applet|area|article|aside|audio|b|base|basefont|bdi|bdo|big|blockquote|body|br|button|canvas|caption|center|cite|code|col|colgroup|command|datalist|dd|del|details|dir|div|dfn|dialog|dl|dt|em|embed|fieldset|figcaption|figure|font|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|header|hr|html|i|iframe|img|input|ins|kbd|keygen|label|legend|li|link|map|mark|menu|menuitem|meta|meter|nav|noframes|noscript|object|ol|optgroup|option|output|p|param|pre|progress|q|rp|rt|ruby|s|samp|script|section|select|small|source|span|strike|strong|style|sub|summary|sup|table|tbody|td|textarea|tfoot|th|thead|time|title|tr|track|tt|u|ul|var|video|wbr"
 
-
-    let labelsExt = "#.:[";
+    let labelsExt = "#.:[,@*&";
 
     //max level is six
     flags.split('').forEach(sub => {
@@ -142,43 +140,35 @@ var _unitEvt = function() {
             .replace(new RegExp('\\ \\{\\s{4}' + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*1)}` + sub);
     })
 
-    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word";
+    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text-|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word|flex|align|justify|outline";
     tags.split('|').forEach(item => {
-        res = res.replace(new RegExp('\\;\\s+' + item, 'g'), '; ' + item);
+        res = res.replace(new RegExp('\\;\\s+' + item, 'g'), '; ' + item)
+            .replace(new RegExp(`\\s{1}\\{\\s{2,24}${item}`, 'g'), ` { ${item}`)
     })
-
-    for (let i = 0; i < 6; i++) {
-        
-    }
-
-    //replace header @import
-    // res = res.replace(new RegExp('\\;\\@', 'g'), `;${os.EOL}@`)
-
-    //replace header {
-    res = res.replace(new RegExp('\\ \\{\\s{2,24}', 'g'), ` { `)
 
     //replace all blanks
     res = res.replace(new RegExp(`\\;\\s+\\}`, 'g'), `; }`)
 
-    // res = res.replace(/\;\}/g, '; }')
-    //     .replace(/(\;\ )+/g, '; ')
+    res = res.replace(new RegExp(`\\}\\}`, 'g'), `}${os.EOL}}`)
 
-    // res = res.replace(new RegExp('\\;\\}\\;\\}', 'g'), `;}${os.EOL}}`)
+    // fix sass params
+    "0|1|2|3|4|5|6|7|8|9|rgba|transform|calc|inherit|true|false".split('|').forEach(item => {
+        res = res.replace(new RegExp(`\\:\\s{2,}${item}`, 'g'), `: ${item}`)
+    })
 
-    // res = res.replace(new RegExp('\\;\\ \\;\\}', 'g'), `; }`)
+    "$@".split('').forEach(item => {
+        res = res.replace(new RegExp(`\\:\\s{2,}\\${item}`, 'g'), `: ${item}`)
+            .replace(new RegExp(`\\;\\s*\\${item}`, 'g'), `; ${item}`)
+            .replace(new RegExp(`\\s{1}\\{\\s*\\${item}`, 'g'), ` { ${item}`)
+    })
 
-    // res = res.replace(new RegExp('\\;\\ \\;\\}', 'g'), `; }`)
+    "@include|@extend|@mixin".split('|').forEach(item => {
+        res = res.replace(new RegExp(`\\s{1}\\{\\s{2,}\\${item}`, 'g'), ` { ${item}`)
+            .replace(new RegExp(`\\;\\{\\s{2,}\\${item}`, 'g'), `; ${item}`)
+    })
 
-    // res = res.replace(new RegExp('\\s{2,3}\\;}', 'g'), ' ')
-
-    // flag+labels
-
-
-
-
-    // res = res.replace(new RegExp('\\;{2,24}', 'g'), ';');
-    // res = res.replace(new RegExp('(\\;\\ ){2,24}', 'g'), '; ');
-
+    res = res.replace(new RegExp(`\\;\\s*\\$`, 'g'), `;${os.EOL}$`)
+        // res = res.replace(new RegExp('\\;\\s*\\@', 'g'), `;${os.EOL}@`)
 
     if (res) {
 
