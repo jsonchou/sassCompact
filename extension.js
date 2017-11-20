@@ -27,11 +27,8 @@ var _unitEvt = function() {
 
     var res = content
 
-    // .replace(/(\;\ )+/g, ';')
-    // .replace(/\}/g, ';}')
-    // .replace(/\;+/g, ';')
-    // .replace(/(\;\ )+/g, ';')
-    // .replace(/\;/g, '; ')
+        .replace(/(\;\ )+/g, ';')
+        .replace(/\;/g, '; ')
 
     // .replace(/\s?\{/g, ' {') //"{" => " { "
     //     .replace(/\}/g, '}') //"}  " => "} "
@@ -48,7 +45,7 @@ var _unitEvt = function() {
     //     .replace(new RegExp(os.EOL + '; }', 'g'), '; }')
 
     // fix animation style
-        .replace(/\{\ 0%\ \{/g, '{ ' + os.EOL + ' 0% {')
+    .replace(/\{\ 0%\ \{/g, '{ ' + os.EOL + ' 0% {')
         .replace(/\{\ from\ \{/g, '{ ' + os.EOL + ' from {')
         .replace(/\}\ to\ \{/g, '} ' + os.EOL + ' to {')
         .replace(new RegExp('; base64,', 'g'), ';base64,')
@@ -67,11 +64,9 @@ var _unitEvt = function() {
         .replace(new RegExp('{' + os.EOL, 'g'), '{')
         .replace(new RegExp(os.EOL + '}', 'g'), '}'); //end
 
-    let flags = "%$~+>&*[:.#";
+    let flags = "%$~+>&*[:.#@";
 
-    let labels = "a|abbr|acronym|address|applet|area|article|aside|audio|b|base|basefont|bdi|bdo|big|blockquote|body|br|button|canvas|caption|center|cite|code|col|colgroup|command|datalist|dd|del|details|dir|div|dfn|dialog|dl|dt|em|embed|fieldset|figcaption|figure|font|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|header|hr|html|i|iframe|img|input|ins|kbd|keygen|label|legend|li|link|map|mark|menu|menuitem|meta|meter|nav|noframes|noscript|object|ol|optgroup|option|output|p|param|pre|progress|q|rp|rt|ruby|s|samp|script|section|select|small|source|span|strike|strong|style|sub|summary|sup|table|tbody|td|textarea|tfoot|th|thead|time|title|tr|track|tt|u|ul|var|video|wbr"
-
-    let labelsExt = "#.:[,@*&";
+    let labels = "a|b|p|q|s|canvas|caption|center|cite|code|col|colgroup|command|datalist|dd|del|details|dir|div|dfn|dialog|dl|dt|em|embed|fieldset|figcaption|figure|font|footer|form|frame|frameset|h|i|kbd|keygen|label|legend|li|link|map|mark|menu|menuitem|meta|meter|nav|noframes|noscript|object|ol|optgroup|option|output|rp|rt|ruby|table|tbody|td|textarea|tfoot|th|thead|time|title|tr|track|tt|u|wbr"
 
     //max level is six
     flags.split('').forEach(sub => {
@@ -95,52 +90,24 @@ var _unitEvt = function() {
     // labels
     labels.split('|').forEach(item => {
         res =
-            res.replace(new RegExp('\\;\\s{24}' + item + '\\ \{', 'g'), `;${os.EOL}${' '.repeat(4*6)}` + item + " {")
-            .replace(new RegExp('\\;\\s{20}' + item + '\\ \{', 'g'), `;${os.EOL}${' '.repeat(4*5)}` + item + " {")
-            .replace(new RegExp('\\;\\s{16}' + item + '\\ \{', 'g'), `;${os.EOL}${' '.repeat(4*4)}` + item + " {")
-            .replace(new RegExp('\\;\\s{12}' + item + '\\ \{', 'g'), `;${os.EOL}${' '.repeat(4*3)}` + item + " {")
-            .replace(new RegExp('\\;\\s{8}' + item + '\\ \{', 'g'), `;${os.EOL}${' '.repeat(4*2)}` + item + " {")
-            .replace(new RegExp('\\;\\s{4}' + item + '\\ \{', 'g'), `;${os.EOL}${' '.repeat(4*1)}` + item + " {");
+            res.replace(new RegExp('\\;\\s{24}' + item, 'g'), `;${os.EOL}${' '.repeat(4*6)}` + item)
+            .replace(new RegExp('\\;\\s{20}' + item, 'g'), `;${os.EOL}${' '.repeat(4*5)}` + item)
+            .replace(new RegExp('\\;\\s{16}' + item, 'g'), `;${os.EOL}${' '.repeat(4*4)}` + item)
+            .replace(new RegExp('\\;\\s{12}' + item, 'g'), `;${os.EOL}${' '.repeat(4*3)}` + item)
+            .replace(new RegExp('\\;\\s{8}' + item, 'g'), `;${os.EOL}${' '.repeat(4*2)}` + item)
+            .replace(new RegExp('\\;\\s{4}' + item, 'g'), `;${os.EOL}${' '.repeat(4*1)}` + item)
 
         res =
-            res.replace(new RegExp('\\ \\{\\s{24}' + item + '\\ \{', 'g'), ` {${os.EOL}${' '.repeat(4*6)}` + item + " {")
-            .replace(new RegExp('\\ \\{\\s{20}' + item + '\\ \{', 'g'), ` {${os.EOL}${' '.repeat(4*5)}` + item + " {")
-            .replace(new RegExp('\\ \\{\\s{16}' + item + '\\ \{', 'g'), ` {${os.EOL}${' '.repeat(4*4)}` + item + " {")
-            .replace(new RegExp('\\ \\{\\s{12}' + item + '\\ \{', 'g'), ` {${os.EOL}${' '.repeat(4*3)}` + item + " {")
-            .replace(new RegExp('\\ \\{\\s{8}' + item + '\\ \{', 'g'), ` {${os.EOL}${' '.repeat(4*2)}` + item + " {")
-            .replace(new RegExp('\\ \\{\\s{4}' + item + '\\ \{', 'g'), ` {${os.EOL}${' '.repeat(4*1)}` + item + " {");
-
-        labelsExt.split('').forEach(sub => {
-            res =
-                res.replace(new RegExp('\\ \\{\\s{24}' + item + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*6)}` + item + sub)
-                .replace(new RegExp('\\ \\{\\s{20}' + item + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*5)}` + item + sub)
-                .replace(new RegExp('\\ \\{\\s{16}' + item + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*4)}` + item + sub)
-                .replace(new RegExp('\\ \\{\\s{12}' + item + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*3)}` + item + sub)
-                .replace(new RegExp('\\ \\{\\s{8}' + item + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*2)}` + item + sub)
-                .replace(new RegExp('\\ \\{\\s{4}' + item + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*1)}` + item + sub);
-
-            res =
-                res.replace(new RegExp('\\;\\s{24}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*6)}` + item + sub)
-                .replace(new RegExp('\\;\\s{20}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*5)}` + item + sub)
-                .replace(new RegExp('\\;\\s{16}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*4)}` + item + sub)
-                .replace(new RegExp('\\;\\s{12}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*3)}` + item + sub)
-                .replace(new RegExp('\\;\\s{8}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*2)}` + item + sub)
-                .replace(new RegExp('\\;\\s{4}' + item + '\\' + sub, 'g'), `;${os.EOL}${' '.repeat(4*1)}` + item + sub);
-        })
+            res.replace(new RegExp('\\ \\{\\s{24}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*6)}` + item)
+            .replace(new RegExp('\\ \\{\\s{20}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*5)}` + item)
+            .replace(new RegExp('\\ \\{\\s{16}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*4)}` + item)
+            .replace(new RegExp('\\ \\{\\s{12}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*3)}` + item)
+            .replace(new RegExp('\\ \\{\\s{8}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*2)}` + item)
+            .replace(new RegExp('\\ \\{\\s{4}' + item, 'g'), ` {${os.EOL}${' '.repeat(4*1)}` + item)
 
     })
 
-    labelsExt.split('').forEach(sub => {
-        res =
-            res.replace(new RegExp('\\ \\{\\s{24}' + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*6)}` + sub)
-            .replace(new RegExp('\\ \\{\\s{20}' + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*5)}` + sub)
-            .replace(new RegExp('\\ \\{\\s{16}' + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*4)}` + sub)
-            .replace(new RegExp('\\ \\{\\s{12}' + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*3)}` + sub)
-            .replace(new RegExp('\\ \\{\\s{8}' + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*2)}` + sub)
-            .replace(new RegExp('\\ \\{\\s{4}' + '\\' + sub, 'g'), ` {${os.EOL}${' '.repeat(4*1)}` + sub);
-    })
-
-    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text-|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word|flex|align|justify|outline";
+    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text-|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word|flex|align|justify|outline|orphans|widows|page-|clip|touch|pointer|resize|order";
     tags.split('|').forEach(item => {
         res = res.replace(new RegExp('\\;\\s+' + item, 'g'), '; ' + item)
             .replace(new RegExp(`\\s{1}\\{\\s{2,24}${item}`, 'g'), ` { ${item}`)
@@ -156,19 +123,13 @@ var _unitEvt = function() {
         res = res.replace(new RegExp(`\\:\\s{2,}${item}`, 'g'), `: ${item}`)
     })
 
-    "$@".split('').forEach(item => {
-        res = res.replace(new RegExp(`\\:\\s{2,}\\${item}`, 'g'), `: ${item}`)
-            .replace(new RegExp(`\\;\\s*\\${item}`, 'g'), `; ${item}`)
-            .replace(new RegExp(`\\s{1}\\{\\s*\\${item}`, 'g'), ` { ${item}`)
-    })
-
-    "@include|@extend|@mixin".split('|').forEach(item => {
+    "@extend|@mixin|@media|@if|@each".split('|').forEach(item => {
         res = res.replace(new RegExp(`\\s{1}\\{\\s{2,}\\${item}`, 'g'), ` { ${item}`)
             .replace(new RegExp(`\\;\\{\\s{2,}\\${item}`, 'g'), `; ${item}`)
     })
 
     res = res.replace(new RegExp(`\\;\\s*\\$`, 'g'), `;${os.EOL}$`)
-        // res = res.replace(new RegExp('\\;\\s*\\@', 'g'), `;${os.EOL}@`)
+        res = res.replace(new RegExp('\\;\\s*\\@import', 'g'), `;${os.EOL}@import`)
 
     if (res) {
 
