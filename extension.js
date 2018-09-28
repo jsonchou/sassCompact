@@ -7,10 +7,10 @@ var vscode = require('vscode');
 //var window = vscode.window;
 var commands = vscode.commands;
 
-const level = 8; //max nest level
+const level = 12; //max nest level
 
 //unit event
-var _unitEvt = function() {
+var _unitEvt = function () {
     var config = vscode.workspace.getConfiguration('sassCompact');
     var editor = vscode.editor || vscode.window.activeTextEditor;
     var doc = editor.document;
@@ -37,45 +37,45 @@ var _unitEvt = function() {
 
     var res = content
 
-        .replace(new RegExp('; base64,', 'g'), ';base64,')
         .replace(/(\;\ )+/g, ';')
         .replace(/\;/g, '; ')
 
-    // fix animation style
-    .replace(/\{\ 0%\ \{/g, '{ ' + os.EOL + ' 0% {')
+        // fix animation style
+        .replace(/\{\ 0%\ \{/g, '{ ' + os.EOL + ' 0% {')
         .replace(/\{\ from\ \{/g, '{ ' + os.EOL + ' from {')
         .replace(/\}\ to\ \{/g, '} ' + os.EOL + ' to {')
 
-    .replace(new RegExp(';' + os.EOL, 'g'), ';')
+        .replace(new RegExp(';' + os.EOL, 'g'), ';')
         .replace(new RegExp('{' + os.EOL, 'g'), '{')
         .replace(new RegExp(os.EOL + '}', 'g'), '}'); //end
 
-    let flags = "%$~+>&*[:.#@";
-
-    let labels = "a|b|p|q|s|canvas|caption|center|cite|code|col|colgroup|command|datalist|dd|del|details|dir|div|dfn|dialog|dl|dt|em|embed|fieldset|figcaption|figure|font|footer|form|frame|frameset|h|i|kbd|keygen|label|legend|li|link|map|mark|menu|menuitem|meta|meter|nav|noframes|noscript|object|ol|optgroup|option|output|rp|rt|ruby|table|tbody|td|textarea|tfoot|th|thead|time|title|tr|track|tt|u|wbr"
+    let flags = "%$~+>&*[:.#";
 
     flags.split('').forEach(sub => {
         for (let i = level; i >= 1; i--) {
             res =
-                res.replace(new RegExp(`\\;\\s{${4*i}}\\` + sub, 'g'), `;${os.EOL}${' '.repeat(4*i)}` + sub)
-                .replace(new RegExp(`\\{\\s{${4*i}}\\` + sub, 'g'), `{${os.EOL}${' '.repeat(4*i)}` + sub)
+                res.replace(new RegExp(`\\;\\s{${4 * i}}\\` + sub, 'g'), `;${os.EOL}${' '.repeat(4 * i)}` + sub)
+                    .replace(new RegExp(`\\{\\s{${4 * i}}\\` + sub, 'g'), `{${os.EOL}${' '.repeat(4 * i)}` + sub)
         }
     })
+
+
+    let labels = "a|b|p|q|s|canvas|caption|center|cite|code|col|colgroup|command|datalist|dd|del|details|dir|div|dfn|dialog|dl|dt|em|embed|fieldset|figcaption|figure|font|footer|form|frame|frameset|h|i|kbd|keygen|label|legend|li|link|map|mark|menu|menuitem|meta|meter|nav|noframes|noscript|object|ol|optgroup|option|output|rp|rt|ruby|table|tbody|td|textarea|tfoot|th|thead|time|title|tr|track|tt|u|wbr"
 
     // labels
     labels.split('|').forEach(item => {
         for (let i = level; i >= 1; i--) {
-            res = res.replace(new RegExp(`\\;\\s{${4*i}}` + item, 'g'), `;${os.EOL}${' '.repeat(4*i)}` + item)
-            res = res.replace(new RegExp(`\\ \\{\\s{${4*i}}` + item, 'g'), ` {${os.EOL}${' '.repeat(4*i)}` + item)
+            res = res.replace(new RegExp(`\\;\\s{${4 * i}}` + item, 'g'), `;${os.EOL}${' '.repeat(4 * i)}` + item)
+            res = res.replace(new RegExp(`\\ \\{\\s{${4 * i}}` + item, 'g'), ` {${os.EOL}${' '.repeat(4 * i)}` + item)
         }
     })
 
-    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text-|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word|flex|align|justify|outline|orphans|widows|page-|clip|touch|pointer|resize|order|counter|list|zoom";
+    let tags = "width|height|top|left|bottom|right|position|margin|padding|z-index|border|display|font|line|content|float|color|background|vertical|-webkit|-moz|-ms|-o|filter|opacity|box|text-|transition|cursor|animation|transform|letter|overflow|max-|min-|user|white|visibility|clear|direction|word|flex|align|justify|outline|orphans|widows|page-|clip|touch|pointer|resize|order|counter|list|zoom|@include";
 
     // remove header {}
     tags.split('|').forEach(item => {
         res = res.replace(new RegExp('\\;\\s+' + item, 'g'), '; ' + item)
-            .replace(new RegExp(`\\s{1}\\{\\s{2,${4*level}}${item}`, 'g'), ` { ${item}`)
+            .replace(new RegExp(`\\s{1}\\{\\s{2,${4 * level}}${item}`, 'g'), ` { ${item}`)
     })
 
     //replace all blanks
@@ -90,20 +90,31 @@ var _unitEvt = function() {
 
     "#$".split('').forEach(item => {
         res = res.replace(new RegExp(`\\:\\s{2,}\\${item}`, 'g'), `: ${item}`)
-            // .replace(new RegExp(`\\;\\s*\\${item}`, 'g'), `; ${item}`)
-            // .replace(new RegExp(`\\s{1}\\{\\s*\\${item}`, 'g'), ` { ${item}`)
+        // .replace(new RegExp(`\\;\\s*\\${item}`, 'g'), `; ${item}`)
+        // .replace(new RegExp(`\\s{1}\\{\\s*\\${item}`, 'g'), ` { ${item}`)
     })
 
-    "@extend|@mixin".split('|').forEach(item => {
+    "@include|@extend|@mixin|@if|@else|@return".split('|').forEach(item => {
         res = res.replace(new RegExp(`\\s{1}\\{\\s{2,}\\${item}`, 'g'), ` { ${item}`)
             .replace(new RegExp(`\\;\\{\\s{2,}\\${item}`, 'g'), `; ${item}`)
     })
 
-    res = res.replace(new RegExp('\\;\\s*\\@import', 'g'), `;${os.EOL}@import`);
+    res = res.replace(new RegExp('\\;\\s*\\@import', 'g'), `;${os.EOL}@import`)
+        .replace(new RegExp(`; base64,`, 'gi'), ";base64,")
+
+
+    let percArr = [];
+    Array.from({ length: 101 }).map((item, index) => {
+        percArr.push(index)
+    })
+
+    percArr.map(c => {
+        res = res.replace(new RegExp(` {    ${c}% { `, 'g'), ` {    ${os.EOL}${' '.repeat(4)}${c}% { `);
+    })
 
     if (res) {
 
-        editor.edit(function(edit) {
+        editor.edit(function (edit) {
             edit.replace(range, res);
         });
 
@@ -123,7 +134,7 @@ function activate(context) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
 
-    context.subscriptions.push(commands.registerCommand('extension.sassCompact', function() {
+    context.subscriptions.push(commands.registerCommand('extension.sassCompact', function () {
         // The code you place here will be executed every time your command is executed
         _unitEvt();
     }));
@@ -131,7 +142,7 @@ function activate(context) {
 }
 
 // this method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() { }
 
 exports.activate = activate;
 exports.deactivate = deactivate;
