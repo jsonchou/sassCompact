@@ -6,3 +6,6 @@
 
 @mixin wh($w,$h){width:r($w); height:r($h); }
 
+.test{
+	@include wh(100,100)
+}

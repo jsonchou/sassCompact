@@ -5,23 +5,21 @@
 var os = require('os');
 var vscode = require('vscode');
 var postcss = require('postcss')
+var postcssScss = require('postcss-scss')
 var precss = require('precss')
 var extend = require('postcss-extend')
-var mixins = require('postcss-mixins')
 var defineFunction = require('postcss-define-function')
-var postcssParser = require('postcss-scss')
 var advancedVariables = require('postcss-advanced-variables')
+let stripInlineComments = require('postcss-strip-inline-comments')
+
 let nested = require('postcss-nested')
+let mixins = require('postcss-mixins')
 
 let sassyMixins = require('postcss-sassy-mixins')
 let simpleVars = require('postcss-simple-vars')
 let nestedVars = require('postcss-nested-vars')
 let nestedImport = require('postcss-nested-import')
 let postImport = require('postcss-import')
-
-let commentParser = require('postcss-comment')
-
-
 
 //var window = vscode.window;
 var commands = vscode.commands;
@@ -137,23 +135,23 @@ var _unitEvt = function () {
 		}).then(data => {
 			let docFilePath = doc.fileName
 			// fix v r p function to rpx & compact stream to css
-			if (docFilePath.indexOf('.wxss') > -1) {
+			if (config.Wxss && docFilePath.indexOf('.wxss') > -1) {
 				try {
 					start = new vscode.Position(0, 0);
 					end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length);
 					range = new vscode.Range(start, end);
 					res = doc.getText(range);
 
-					var reg = new RegExp(`(v|r|p)\\(\\d*?\\)`, 'g')
+					var reg = new RegExp(`(v|r|p)\\((\\-|\\+)?\\d+?\\)`, 'g')
 					res = res.replace(reg, function (match, p1, offset, str) {
 						return match.replace(/[v|r|p]\(/gi, '').replace(/\)/, '') + 'rpx'
 					})
 					try {
-						postcss([precss, extend, mixins, postImport, defineFunction, advancedVariables, nested, sassyMixins, simpleVars, nestedVars, nestedImport]).process(res, { from: docFilePath, to: docFilePath }).then(result => {
+						postcss([precss, postImport, nestedImport, mixins, sassyMixins, nested, extend, defineFunction, advancedVariables, simpleVars, nestedVars, stripInlineComments]).process(res, { parser: postcssScss, from: docFilePath, to: docFilePath }).then(result => {
 							let css = result.css
 							if (css) {
 								editor.edit(function (edit) {
-									edit.replace(range, res)
+									edit.replace(range, css)
 								})
 							}
 						})

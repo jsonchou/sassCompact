@@ -1,0 +1,12 @@
+.page-award { width: -750rpx;
+}
+    .page-award .empty { font-size: -28rpx;
+    }
+    .page-award .empty img { margin-top: -222rpx; width: 303rpx; margin-bottom: 10rpx; }
+    .page-award .award-list { margin: 0 96rpx; height: 850rpx; }
+    .page-award .award-item { -webkit-box-shadow:0 3rpx 0 0 rgba(13,17,90,1); box-shadow:0 3rpx 0 0 rgba(13,17,90,1); box-shadow:0 3rpx 0 0 rgba(13,17,90,1); }
+    .page-award .award-item_status { right: 28rpx; }
+    .page-award .award-item_top img{max-width: 100rpx}
+    .page-award .award-item_btn { -webkit-box-shadow:0 2rpx 2rpx rgba(223, 198, 153, 1); box-shadow:0 2rpx 2rpx rgba(223, 198, 153, 1)
+	}
+    .page-award .award-item_btn.used{background:#eee; }
