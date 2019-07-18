@@ -99,10 +99,10 @@
         "precss": "^4.0.0"
     },
     "devDependencies": {
+		"typescript": "^2.0.3",
+        "vscode": "^1.0.0",
         "@types/mocha": "^2.2.32",
         "@types/node": "^6.0.40",
-        "typescript": "^2.0.3",
-        "vscode": "^1.0.0",
         "done-rainbow": "^0.1.2",
         "fs-extra": "^8.1.0",
         "glob": "^7.1.4"
