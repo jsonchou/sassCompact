@@ -2,7 +2,7 @@
     "name": "sass-compact",
     "displayName": "sass-compact",
     "description": "let's go back to original way to write our css",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "publisher": "jsonchou",
     "Keywords": "sass compact,less compact,format css,single line,single row",
     "author": {
