@@ -17,6 +17,10 @@ let sassyMixins = require('postcss-sassy-mixins')
 let simpleVars = require('postcss-simple-vars')
 let nestedVars = require('postcss-nested-vars')
 let nestedImport = require('postcss-nested-import')
+let postImport = require('postcss-import')
+
+let commentParser = require('postcss-comment')
+
 
 
 //var window = vscode.window;
@@ -127,15 +131,11 @@ var _unitEvt = function () {
 		res = res.replace(new RegExp(` {    ${c}% { `, 'g'), ` {    ${os.EOL}${' '.repeat(4)}${c}% { `);
 	})
 
-
-
 	if (res) {
-
 		editor.edit(function (edit) {
-			edit.replace(range, res);
-
+			edit.replace(range, res)
+		}).then(data => {
 			let docFilePath = doc.fileName
-
 			// fix v r p function to rpx & compact stream to css
 			if (docFilePath.indexOf('.wxss') > -1) {
 				try {
@@ -149,14 +149,13 @@ var _unitEvt = function () {
 						return match.replace(/[v|r|p]\(/gi, '').replace(/\)/, '') + 'rpx'
 					})
 					try {
-						postcss([precss, extend, mixins, defineFunction, advancedVariables, nested, sassyMixins, simpleVars, nestedVars, nestedImport]).process(res, { from: docFilePath, to: docFilePath }).then(result => {
+						postcss([precss, extend, mixins, postImport, defineFunction, advancedVariables, nested, sassyMixins, simpleVars, nestedVars, nestedImport]).process(res, { from: docFilePath, to: docFilePath }).then(result => {
 							let css = result.css
 							if (css) {
-								setTimeout(() => {
-									edit.replace(range, css);
-								}, 100);
+								editor.edit(function (edit) {
+									edit.replace(range, res)
+								})
 							}
-
 						})
 					} catch (err) {
 						console.log(err)
@@ -164,13 +163,9 @@ var _unitEvt = function () {
 				} catch (err) {
 					console.log(err)
 				}
-
 			}
-
 		});
-
 	}
-
 }
 
 // this method is called when your extension is activated

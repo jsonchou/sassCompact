@@ -65,11 +65,6 @@
                 "command": "extension.sassCompact",
                 "key": "shift+alt+f",
                 "when": "editorTextFocus && editorLangId == less"
-            },
-            {
-                "command": "extension.sassCompact",
-                "key": "shift+alt+f",
-                "when": "editorTextFocus && editorLangId == wxss"
             }
         ],
         "commands": [
@@ -95,8 +90,10 @@
         "glob": "^7.1.4",
         "postcss": "^7.0.17",
         "postcss-advanced-variables": "^3.0.0",
+        "postcss-comment": "^2.0.0",
         "postcss-define-function": "^0.1.2",
         "postcss-extend": "^1.0.5",
+        "postcss-import": "^12.0.1",
         "postcss-mixins": "^6.2.2",
         "postcss-nested": "^4.1.2",
         "postcss-nested-import": "^0.1.0",
