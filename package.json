@@ -54,6 +54,10 @@
             "command": "extension.sassCompact",
             "key": "shift+alt+f",
             "when": "editorTextFocus && editorLangId == less"
+        }, {
+            "command": "extension.sassCompact",
+            "key": "shift+alt+f",
+            "when": "editorTextFocus && editorLangId == wxss"
         }],
         "commands": [{
             "command": "extension.sassCompact",
