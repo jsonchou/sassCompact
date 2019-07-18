@@ -81,13 +81,7 @@
         "clean": "node ./build/scripts/clean",
         "release": "node ./build/scripts/release"
     },
-    "devDependencies": {
-        "@types/mocha": "^2.2.32",
-        "@types/node": "^6.0.40",
-        "autoprefix": "^1.0.1",
-        "done-rainbow": "^0.1.2",
-        "fs-extra": "^8.1.0",
-        "glob": "^7.1.4",
+    "dependencies": {
         "postcss": "^7.0.17",
         "postcss-advanced-variables": "^3.0.0",
         "postcss-comment": "^2.0.0",
@@ -102,8 +96,15 @@
         "postcss-scss": "^2.0.0",
         "postcss-simple-extend": "^1.0.0",
         "postcss-simple-vars": "^5.0.2",
-        "precss": "^4.0.0",
+        "precss": "^4.0.0"
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.32",
+        "@types/node": "^6.0.40",
         "typescript": "^2.0.3",
-        "vscode": "^1.0.0"
+        "vscode": "^1.0.0",
+        "done-rainbow": "^0.1.2",
+        "fs-extra": "^8.1.0",
+        "glob": "^7.1.4"
     }
 }
