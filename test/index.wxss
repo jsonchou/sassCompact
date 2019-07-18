@@ -1,0 +1,34 @@
+/*end 活动首页 */
+/* 海报页面 */
+
+.teamplate-user { background: #f6f6f6 url(../images/bg04.jpg) no-repeat center top; background-size: 100% 390rpx; overflow: hidden; position: relative; }
+
+.teamplate-user .process { margin: 249rpx auto 0; }
+
+.teamplate-user .process .user-info { width: 100%; padding-top: 157rpx; color: #444444; font-size: 28rpx; text-align: center; }
+
+.teamplate-user .process .user-info span { color: #1a6aff; }
+
+.teamplate-user .process-station {}
+
+.teamplate-user .buttons { margin-top: 3rpx; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; padding: 0 56rpx; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.teamplate-user .buttons div { font-weight: 700; width: 300rpx; border-radius: 10rpx; background-color: #fff; text-align: center; line-height: 88rpx; color: #fff; font-size: 32rpx}
+
+.teamplate-user .buttons div:nth-child(1) { background: -webkit-gradient(linear, left top, right top, from(#1384ff), to(#085fff)); background: -webkit-linear-gradient(left, #1384ff, #085fff); background: linear-gradient(to right, #1384ff, #085fff); }
+
+.teamplate-user .buttons div:nth-child(2) { background: -webkit-gradient(linear, left top, right top, from(#fb6b69), to(#f82269)); background: -webkit-linear-gradient(left, #fb6b69, #f82269); background: linear-gradient(to right, #fb6b69, #f82269); }
+
+.teamplate-user .buttons-on div:nth-child(1) { background: -webkit-gradient(linear, left top, right top, from(#1384ff), to(#085fff)); background: -webkit-linear-gradient(left, #1384ff, #085fff); background: linear-gradient(to right, #1384ff, #085fff); }
+
+.teamplate-user .buttons-on div { width: 100%; }
+
+.teamplate-user .footer-user { margin: 104rpx auto 40rpx; }
+
+.teamplate-user-station { background: #f6f6f6 url(../images/bg05.jpg) no-repeat center top; background-size: 100% 390rpx; }
+
+.template-end-mask { display: none; position: fixed; left: 0; top: 0; z-index: 10000; width: 100%; height: 100%; }
+
+.template-end-mask .tips-cont { position: absolute; left: 0; top: 30%; width: 100%; line-height: 2; color: #fff; }
+
+.end-mask-on { display: block; }
