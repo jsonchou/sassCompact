@@ -18,7 +18,7 @@ let's go back to original way to write our css
 
 ## Examples
 
-* segment 1
+* .scss format
 
 ~~~ css
 .pt-select {
@@ -69,7 +69,7 @@ let's go back to original way to write our css
 }
 ~~~
 
-* format output
+* output
 
 ~~~ css
 .pt-select { margin: 0 auto 3.6rem;
@@ -94,7 +94,7 @@ let's go back to original way to write our css
 ~~~
 
 
-* segment 2
+* .wxss format
 
 ~~~ css
 .page-award { width: v(-750);
@@ -113,10 +113,18 @@ let's go back to original way to write our css
 }
 ~~~
 
-* format output
+* output
 
 ~~~ css
-
+.page-award { width: -750rpx; }
+.page-award .empty { font-size: -28rpx; }
+.page-award .empty img { margin-top: -222rpx; width: 303rpx; margin-bottom: 10rpx; }
+.page-award .award-list { margin: 0 96rpx; height: 850rpx; }
+.page-award .award-item { box-shadow:0 3rpx 0 0 rgba(13,17,90,1); box-shadow:0 3rpx 0 0 rgba(13,17,90,1); }
+.page-award .award-item_status { right: 28rpx; }
+.page-award .award-item_top img{max-width: 100rpx}
+.page-award .award-item_btn { box-shadow:0 2rpx 2rpx rgba(223, 198, 153, 1)}
+.page-award .award-item_btn.used{background:#eee; }
 ~~~
 
 
